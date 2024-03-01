@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -euo pipefail
+set -euxo pipefail
 
 if [[ -z "${BUILDKITE_PLUGIN_JUNIT_ANNOTATE_ARTIFACTS:-}" ]]; then
   echo "🚨 Missing artifacts configuration for the plugin"
@@ -47,7 +47,7 @@ docker \
   run \
     --rm \
     --volume "$artifacts_dir:/junits" \
-    --volume "$PLUGIN_DIR/ruby:/src" \
+    --volume "$PLUGIN_DIR/ruby:/src:ro" \
     --env "BUILDKITE_PLUGIN_JUNIT_ANNOTATE_JOB_UUID_FILE_PATTERN=${BUILDKITE_PLUGIN_JUNIT_ANNOTATE_JOB_UUID_FILE_PATTERN:-}" \
     --env "BUILDKITE_PLUGIN_JUNIT_ANNOTATE_FAILURE_FORMAT=${BUILDKITE_PLUGIN_JUNIT_ANNOTATE_FAILURE_FORMAT:-}" \
     --env "BUILDKITE_PLUGIN_JUNIT_ANNOTATE_REPORT_SLOWEST=${BUILDKITE_PLUGIN_JUNIT_ANNOTATE_REPORT_SLOWEST:-}" \
